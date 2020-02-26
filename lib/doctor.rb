@@ -1,0 +1,30 @@
+class Doctor 
+
+    attr_reader :name
+
+    @@all = []
+    def initialize (name)
+        @name = name 
+        Doctor.all << self 
+    end
+
+    def self.all
+        @@all
+    end
+
+    def appointments
+        Appointment.all.select do |appointment_obj|
+            appointment_obj.doctor == self 
+        end
+    end
+
+    def new_appointment(patient, date)
+        Appointment.new(date, patient, self)
+    end
+
+    def patients 
+        appointments.map do |obj|
+            obj.patient
+        end
+    end
+end 
